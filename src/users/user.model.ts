@@ -19,6 +19,12 @@ export class User extends Model {
     @Column
     password: string;
 
+    @Column({
+        type: DataType.ENUM('admin', 'write', 'read'),
+        defaultValue: 'read'
+    })
+    role: string;
+
     @DeletedAt
     @Column
     deletedAt?: Date;
