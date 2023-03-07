@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { User } from './user.model';
 import { UsersService } from './users.service';
 
@@ -9,10 +9,5 @@ export class UsersController {
     @Get()
     getAll(): Promise<User[]> {
         return this.userService.getAll();
-    }
-
-    @Post()
-    create(): Promise<User> {
-        return this.userService.create();
     }
 }
