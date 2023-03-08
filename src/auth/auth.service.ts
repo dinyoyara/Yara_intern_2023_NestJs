@@ -17,17 +17,20 @@ export class AuthService {
     ) {}
 
     async createAsync(value: SignupDto): Promise<User> {
-        const user = this.userModel.create({
+        const user = await this.userModel.create({
             name: value.name,
             password: await hashPasswordAsync(value.password),
             email: value.email,
             role: value.role
         });
+
+        delete user.dataValues.password;
+        delete user.dataValues.deletedAt;
+        delete user.dataValues.updatedAt;
         return user;
     }
 
     async loginAsync(value: SigninDto): Promise<TokenDto> {
-        console.log(value, value.email);
         const user = await this.userModel.findOne({ where: { email: value.email } });
         if (!user) throw new ForbiddenException('Email incorrect');
 
