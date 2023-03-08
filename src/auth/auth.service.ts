@@ -39,7 +39,7 @@ export class AuthService {
 
     private async signTokenAsync(id: string, role: string): Promise<TokenDto> {
         const payload = {
-            sub: id,
+            id: id,
             role: role
         };
         const secret = this.config.get('JWT_SECRET');
