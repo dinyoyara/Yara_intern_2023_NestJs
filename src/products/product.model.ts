@@ -1,6 +1,8 @@
-import { Column, DataType, Model, PrimaryKey } from 'sequelize-typescript';
+import { BelongsTo, Column, DataType, DeletedAt, ForeignKey, Model, PrimaryKey, Table } from 'sequelize-typescript';
+import { Supplier } from 'src/suppliers/suppliers.model';
 
-export class Products extends Model {
+@Table
+export class Product extends Model {
     @PrimaryKey
     @Column({
         type: DataType.UUID,
@@ -13,4 +15,21 @@ export class Products extends Model {
 
     @Column
     price: number;
+
+    @DeletedAt
+    @Column
+    deletedAt?: Date;
+
+    @ForeignKey(() => Supplier)
+    @Column({
+        type: DataType.UUID,
+        references: {
+            model: Supplier,
+            key: 'id'
+        }
+    })
+    supplierId: string;
+
+    @BelongsTo(() => Supplier)
+    supplier: Supplier;
 }

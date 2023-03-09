@@ -9,6 +9,8 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ProductsModule } from './products/products.module';
 import { SuppliersModule } from './suppliers/suppliers.module';
+import { Product } from './products/product.model';
+import { Supplier } from './suppliers/suppliers.model';
 
 @Module({
     imports: [
@@ -21,7 +23,7 @@ import { SuppliersModule } from './suppliers/suppliers.module';
             database: 'nest.api',
             autoLoadModels: true,
             synchronize: true,
-            models: [User]
+            models: [User, Supplier, Product]
         }),
         ConfigModule.forRoot({
             isGlobal: true

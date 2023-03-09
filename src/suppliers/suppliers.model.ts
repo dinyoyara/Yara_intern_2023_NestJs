@@ -1,5 +1,19 @@
-import { Column, DataType, Length, Model, PrimaryKey, IsEmail, NotEmpty, Unique } from 'sequelize-typescript';
+import {
+    Column,
+    DataType,
+    Length,
+    Model,
+    PrimaryKey,
+    IsEmail,
+    NotEmpty,
+    Unique,
+    HasMany,
+    Table,
+    DeletedAt
+} from 'sequelize-typescript';
+import { Product } from 'src/products/product.model';
 
+@Table
 export class Supplier extends Model {
     @PrimaryKey
     @Column({
@@ -20,4 +34,11 @@ export class Supplier extends Model {
     @Unique
     @Column
     vat: string;
+
+    @DeletedAt
+    @Column
+    deletedAt?: Date;
+
+    @HasMany(() => Product)
+    products: Product[];
 }
