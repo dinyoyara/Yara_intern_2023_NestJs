@@ -1,28 +1,28 @@
 import { Injectable } from '@nestjs/common';
-import { PassportStrategy } from '@nestjs/passport';
-import { ExtractJwt, Strategy } from 'passport-jwt';
 import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/sequelize';
+import { PassportStrategy } from '@nestjs/passport';
+import { ExtractJwt, Strategy } from 'passport-jwt';
 
 import { User } from '../../users/user.model';
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy, 'jwt-passport-strategy') {
+export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     constructor(
         @InjectModel(User)
         private userModel: typeof User,
-        confige: ConfigService
+        config: ConfigService
     ) {
         super({
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-            secretOrKey: confige.get('JWT_SECRET')
+            secretOrKey: config.get('JWT_SECRET')
         });
     }
 
-    async validate(payload: { id: string; role: string }) {
+    async validate(payload: { id: string }) {
         const user = await this.userModel.findByPk(payload.id);
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { password, ...result } = user;
+        const { password, ...result } = user.dataValues;
         return result;
     }
 }

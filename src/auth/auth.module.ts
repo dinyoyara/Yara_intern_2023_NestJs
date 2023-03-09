@@ -5,8 +5,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { User } from 'src/users/user.model';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
-import { JwtStrategy } from './strategy/jwt.strategy';
-
+import { JwtStrategy } from './strategy';
 @Module({
     imports: [SequelizeModule.forFeature([User]), JwtModule.register({})],
     controllers: [AuthController],
