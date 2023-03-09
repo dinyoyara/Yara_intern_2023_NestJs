@@ -2,8 +2,6 @@ import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ConfigModule } from '@nestjs/config';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { User } from './users/user.model';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
@@ -32,8 +30,6 @@ import { Supplier } from './suppliers/suppliers.model';
         AuthModule,
         ProductsModule,
         SuppliersModule
-    ],
-    controllers: [AppController],
-    providers: [AppService]
+    ]
 })
 export class AppModule {}
