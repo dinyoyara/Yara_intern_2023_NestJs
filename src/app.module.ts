@@ -7,6 +7,8 @@ import { AppService } from './app.service';
 import { User } from './users/user.model';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { ProductsModule } from './products/products.module';
+import { SuppliersModule } from './suppliers/suppliers.module';
 
 @Module({
     imports: [
@@ -25,7 +27,9 @@ import { AuthModule } from './auth/auth.module';
             isGlobal: true
         }),
         UsersModule,
-        AuthModule
+        AuthModule,
+        ProductsModule,
+        SuppliersModule
     ],
     controllers: [AppController],
     providers: [AppService]
