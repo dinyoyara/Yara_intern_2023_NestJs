@@ -12,7 +12,7 @@ export class UsersService {
 
     async getAllAsync(): Promise<User[]> {
         return this.userModel.findAll({
-            attributes: ['id', 'name', 'email']
+            attributes: ['id', 'name', 'email', 'role']
         });
     }
 
