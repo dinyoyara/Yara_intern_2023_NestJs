@@ -10,9 +10,16 @@ export class UsersService {
         private userModel: typeof User
     ) {}
 
-    async getAll(): Promise<User[]> {
+    async getAllAsync(): Promise<User[]> {
         return this.userModel.findAll({
             attributes: ['id', 'name', 'email']
         });
+    }
+
+    async deleteByIdAsync(id: string): Promise<User> {
+        const user = await this.userModel.findByPk(id);
+        await user.destroy();
+        delete user.dataValues.password;
+        return user;
     }
 }
