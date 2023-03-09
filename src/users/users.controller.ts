@@ -2,10 +2,9 @@ import { Controller, Get, UseGuards, Param, Delete } from '@nestjs/common';
 
 import { User } from './user.model';
 import { Role } from '../auth/data';
-import { JwtGuard } from '../auth/guard';
+import { JwtGuard, RolesGuard } from '../auth/guard';
 import { UsersService } from './users.service';
 import { Roles } from '../auth/decorator';
-import { RolesGuard } from 'src/auth/guard/roles.guard';
 
 @UseGuards(JwtGuard, RolesGuard)
 @Controller('users')
