@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { Role } from '../auth/data';
 import { Roles } from '../auth/decorator';
 import { JwtGuard, RolesGuard } from '../auth/guard';
@@ -31,5 +31,11 @@ export class ProductsController {
     @Get(':id')
     getOne(@Param('id') id: string): Promise<Product> {
         return this.productService.getOneByIdAsync(id);
+    }
+
+    @Roles(Role.Admin)
+    @Delete(':id')
+    delete(@Param('id') id: string): Promise<Product> {
+        return this.productService.deleteByIdAsycn(id);
     }
 }

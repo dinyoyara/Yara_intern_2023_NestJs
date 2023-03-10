@@ -52,4 +52,10 @@ export class ProductsService {
             ]
         });
     }
+
+    async deleteByIdAsycn(id: string): Promise<Product> {
+        const product = await this.productModel.findByPk(id);
+        product.destroy();
+        return product;
+    }
 }
