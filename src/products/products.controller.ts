@@ -1,10 +1,12 @@
-import { Body, Controller, Param, Post, Put } from '@nestjs/common';
-import { Role } from 'src/auth/data';
-import { Roles } from 'src/auth/decorator';
+import { Body, Controller, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { Role } from '../auth/data';
+import { Roles } from '../auth/decorator';
+import { JwtGuard, RolesGuard } from '../auth/guard';
 import { ProductDto } from './dto';
 import { Product } from './product.model';
 import { ProductsService } from './products.service';
 
+@UseGuards(JwtGuard, RolesGuard)
 @Controller('products')
 export class ProductsController {
     constructor(private productService: ProductsService) {}
@@ -19,5 +21,15 @@ export class ProductsController {
     @Put(':id')
     update(@Body() dto: ProductDto, @Param('id') id: string): Promise<Product> {
         return this.productService.updateAsync(id, dto);
+    }
+
+    @Get()
+    getAll(): Promise<Product[]> {
+        return this.productService.getAllAsync();
+    }
+
+    @Get(':id')
+    getOne(@Param('id') id: string): Promise<Product> {
+        return this.productService.getOneByIdAsync(id);
     }
 }

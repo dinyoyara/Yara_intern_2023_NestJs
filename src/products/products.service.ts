@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import { Supplier } from 'src/suppliers/suppliers.model';
 
 import { ProductDto } from './dto';
 import { Product } from './product.model';
@@ -32,5 +33,23 @@ export class ProductsService {
             { where: { id: id } }
         );
         return this.productModel.findByPk(id);
+    }
+
+    getAllAsync(): Promise<Product[]> {
+        return this.productModel.findAll({
+            attributes: ['id', 'name', 'price', 'supplierId']
+        });
+    }
+
+    getOneByIdAsync(id: string): Promise<Product> {
+        return this.productModel.findByPk(id, {
+            attributes: ['id', 'name', 'price'],
+            include: [
+                {
+                    model: Supplier,
+                    attributes: ['id', 'name', 'email', 'vat']
+                }
+            ]
+        });
     }
 }
